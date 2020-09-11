@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Common head content is included from common.html  -->
+    <th:block th:include="/views/fragments/common.html :: commonhead"></th:block>
+
+    <!-- Include custom head for this head after this line -->
+    <title>Page Title</title>
+
+    <!-- You can create a css with styles only for this page -->
+    <!-- <link href="/css/yourpage.css" rel="stylesheet">-->
+</head>
+
+<body>
+
+<!-- Nav bar is located in common.html -->
+<header th:replace="/views/fragments/common.html :: header"></header>
+
+<!-- Begin THIS page content -->
+<main role="main" class="container ">
+    <h1>Workouts available for you <a class="btn btn-success" href="/workouts/new" role="button">Create a new Workout</a></h1>
+
+
+    <div class="card-columns">
+        <div th:each="workout : ${workouts}" class="card">
+            <div class="card-body">
+                <h4 class="card-title" th:text="${workout.name}">Card title</h4>
+
+                <p class="card-text markdown" th:text="${#strings.abbreviate(workout.description,120)}">Some quick example text to build on the card title and
+                    make up the bulk of the card's content.</p>
+                <a th:href="@{/workouts/{id}(id=${workout.id})}" class="btn btn-outline-info card-link">See More</a>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- End THIS page content -->
+
+
+<!-- Footer is located in common.html -->
+<footer class="footer" th:replace="/views/fragments/common.html :: footer"> </footer>
+
+<!-- Bootstrap Scripts  -->
+<th:block th:include="/views/fragments/common.html :: scripts"></th:block>
+</body>
+</html>
