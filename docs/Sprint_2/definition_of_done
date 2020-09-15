@@ -2,6 +2,6 @@ Definition of Done 2.0
 
 1. The completion of a feature fulfilling the basic requirements outlined.
 2. The successful implementation of a feature, which functions without any bugs or errors arising.
-3. The user being able to make use of the feature without needing to refer to technical documentation.
-4. The feature making use of common web-based user behaviour and traits so it feels fluid and familiar to a user.
+3. The appUser being able to make use of the feature without needing to refer to technical documentation.
+4. The feature making use of common web-based appUser behaviour and traits so it feels fluid and familiar to a appUser.
 5. The appearance of the feature within the greater program possessing clear text and widgets with enough contrast so it can be viewed without difficulty.

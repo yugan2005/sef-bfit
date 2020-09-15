@@ -23,7 +23,10 @@ Read the [Quick start](/docs/Quick_Start.md) to boot your application.
   * email: admin@test.com
   * password: admin
 * Registered User
-  * email : user@test.com
-  * password : user 
+  * email : appUser@test.com
+  * password : appUser 
+  
+
+# Need Enable Java Annotation Processing for Lombok to work
 
 

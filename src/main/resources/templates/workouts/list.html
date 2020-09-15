@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <!-- Common head content is included from common.html  -->
-    <th:block th:include="/views/fragments/common.html :: commonhead"></th:block>
+    <th:block th:include="fragments/common.html :: commonhead"></th:block>
 
     <!-- Include custom head for this head after this line -->
     <title>Page Title</title>
@@ -14,21 +15,33 @@
 <body>
 
 <!-- Nav bar is located in common.html -->
-<header th:replace="/views/fragments/common.html :: header"></header>
+<header th:replace="fragments/common.html :: header"></header>
 
 <!-- Begin THIS page content -->
 <main role="main" class="container ">
-    <h1>Workouts available for you <a class="btn btn-success" href="/workouts/new" role="button">Create a new Workout</a></h1>
-
-
+    <h1 class="mb-3">Workouts available for you
+        <a class="btn btn-success float-right" href="/workouts/new" role="button"
+           th:if="${user != null && user.getRoles().contains(T(au.edu.rmit.isys3413.sefbfit.models.Role).ADMIN)}">
+            Create a new Workout</a>
+    </h1>
     <div class="card-columns">
+        <!--/*@thymesVar id="workouts" type="java.util.List<au.edu.rmit.isys3413.sefbfit.models.Workout>"*/-->
         <div th:each="workout : ${workouts}" class="card">
             <div class="card-body">
                 <h4 class="card-title" th:text="${workout.name}">Card title</h4>
-
-                <p class="card-text markdown" th:text="${#strings.abbreviate(workout.description,120)}">Some quick example text to build on the card title and
-                    make up the bulk of the card's content.</p>
-                <a th:href="@{/workouts/{id}(id=${workout.id})}" class="btn btn-outline-info card-link">See More</a>
+                <div class="card-text">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"
+                            th:each="recipe : ${workout.getRecipes().subList(0, T(Math).min(2, workout.getRecipes().size()))}">
+                            <strong th:text="${recipe.getRecipeType().toDisplayName() + ': '}">Recipe Type: </strong>
+                            <span th:text="${recipe.getQuantity() + ' ' + recipe.getUnit().toDisplayName()}">2 Set</span>
+                            <span th:if="${recipe.getRepetitions() != null}"
+                                  th:text="${' for ' + recipe.getRepetitions() + ' reps'}"> for 3 reps</span>
+                        </li>
+                        <li class="list-group-item"><strong>...</strong></li>
+                    </ul>
+                </div>
+                <a th:href="@{/workouts/{id}(id=${workout.id})}" class="btn btn-outline-info card-link mt-2">See More</a>
             </div>
         </div>
     </div>
@@ -37,9 +50,9 @@
 
 
 <!-- Footer is located in common.html -->
-<footer class="footer" th:replace="/views/fragments/common.html :: footer"> </footer>
+<footer class="footer" th:replace="fragments/common.html :: footer"> </footer>
 
 <!-- Bootstrap Scripts  -->
-<th:block th:include="/views/fragments/common.html :: scripts"></th:block>
+<th:block th:include="fragments/common.html :: scripts"></th:block>
 </body>
 </html>

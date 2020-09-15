@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<!--/*@thymesVar id="workout" type="au.edu.rmit.isys3413.sefbfit.models.Workout"*/-->
+<div th:fragment="workoutform">
+  <form th:action="@{/workouts/edit}" th:object="${workout}" method="post">
+    <input th:value="*{id}" type="hidden" name="id">
+    <div class="form-group mt-3 row">
+      <label for="name" class="col-sm-2 col-form-label">Workout Name:</label>
+      <div class="col-sm-3">
+        <input th:field="*{name}" type="text"
+               class="form-control" id="name" name="name"
+               aria-describedby="nameHelp" placeholder="Enter workout name" required>
+      </div>
+      <div class="col-sm-2 offset-sm-5">
+        <button type="submit" class="btn btn-danger"
+                name="addRecipe">Add New Activity
+        </button>
+      </div>
+    </div>
+    <div>
+      <ul class="list-group mt-3" id='activity-list'>
+        <li class="list-group-item mt-2" id="activity-template" th:each="recipe, itemStat: *{recipes}">
+          <div class="mb-2">Activity <span th:text="${itemStat.index + 1}"></span></div>
+          <div class="input-group">
+            <select class="form-control mr-2" th:field="*{recipes[__${itemStat.index}__].recipeType}">
+              <option
+                  th:each="recipeType: ${T(au.edu.rmit.isys3413.sefbfit.models.workoutrecipe.RecipeType).values()}"
+                  th:value="${recipeType}"
+                  th:text="${recipeType.toDisplayName()}">Squat
+              </option>
+            </select>
+            <input
+                th:field="*{recipes[__${itemStat.index}__].quantity}"
+                type="number"
+                class="form-control mr-2"
+                placeholder="quantity"
+            />
+            <select class="form-control" th:field="*{recipes[__${itemStat.index}__].unit}">
+              <option
+                  th:each="unitType: ${T(au.edu.rmit.isys3413.sefbfit.models.workoutrecipe.Unit).values()}"
+                  th:value="${unitType}"
+                  th:text="${unitType.toDisplayName()}">Sets
+              </option>
+            </select>
+            <span class="input-group-prepend input-group-text ml-2">Repeat</span>
+            <input type="number" class="form-control" th:field="*{recipes[__${itemStat.index}__].repetitions}"/>
+            <button type="submit" class="close ml-3" aria-label="Close" name="removeRecipe"
+                    th:value="${itemStat.index}">&times;
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="btn-toolbar mt-3">
+      <button type="submit" class="btn btn-primary mr-3">Submit Workout</button>
+      <a href="#" th:href="@{/workouts}" class="btn btn-info" role="button">Cancel</a>
+    </div>
+  </form>
+</div>
+</body>
+</html>

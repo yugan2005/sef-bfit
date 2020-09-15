@@ -1,37 +1,52 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- Common head content is included from common.html  -->
-    <th:block th:include="/views/fragments/common.html :: commonhead"></th:block>
+  <!-- Common head content is included from common.html  -->
+  <th:block th:include="fragments/common.html :: commonhead"></th:block>
 
-    <!-- Include custom head for this head after this line -->
-    <title>Page Title</title>
+  <!-- Include custom head for this head after this line -->
+  <title>Page Title</title>
 
-    <!-- You can create a css with styles only for this page -->
-    <!-- <link href="/css/yourpage.css" rel="stylesheet">-->
+  <!-- You can create a css with styles only for this page -->
+  <!-- <link href="/css/yourpage.css" rel="stylesheet">-->
 </head>
 
 <body>
 
 <!-- Nav bar is located in common.html -->
-<header th:replace="/views/fragments/common.html :: header"></header>
+<header th:replace="fragments/common.html :: header"></header>
 
 <!-- Begin THIS page content -->
 <main role="main" class="container ">
-    <h1 th:text="${workout.name}">Workout Name</h1>
-    <h2><a class="btn btn-success" th:href="@{/workouts/{id}/edit(id=${workout.id})}" role="button">Edit Workout</a></h2>
-    <div class="markdown" id="description" th:text="${workout.description}"></div>
-    <div id="workout-programs">
-        <h3>Display here training programs containing this workout</h3>
-    </div>
+  <h2>
+    <span th:text="${workout.name}">Workout Name</span>
+    <a class="btn btn-success float-right" role="button"
+       th:href="@{/workouts/edit(id=${workout.id})}"
+       th:if="${user != null && user.getRoles().contains(T(au.edu.rmit.isys3413.sefbfit.models.Role).ADMIN)}">
+      Edit Workout</a>
+  </h2>
+  <div class="mt-3">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"
+          th:each="recipe : ${workout.getRecipes()}">
+        <strong th:text="${recipe.getRecipeType().toDisplayName() + ': '}">Recipe Type: </strong>
+        <span th:text="${recipe.getQuantity() + ' ' + recipe.getUnit().toDisplayName()}">2 Set</span>
+        <span th:if="${recipe.getRepetitions() != null}"
+              th:text="${' for ' + recipe.getRepetitions() + ' reps'}"> for 3 reps</span>
+      </li>
+    </ul>
+  </div>
+  <div id="workout-programs" class="mt-3">
+    <h3>Display here training programs containing this workout</h3>
+  </div>
 </main>
 <!-- End THIS page content -->
 
 
 <!-- Footer is located in common.html -->
-<footer class="footer" th:replace="/views/fragments/common.html :: footer"> </footer>
+<footer class="footer" th:replace="fragments/common.html :: footer"></footer>
 
 <!-- Bootstrap Scripts  -->
-<th:block th:include="/views/fragments/common.html :: scripts"></th:block>
+<th:block th:include="fragments/common.html :: scripts"></th:block>
 </body>
 </html>

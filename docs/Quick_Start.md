@@ -27,7 +27,7 @@
 | src/main/ | All application(app) code, including main,models, views(HTML files), controllers, SQL scripts and helpers. |
 | src/main/java/app/ | Core application code including main(App.java), model, view, controller and utils. | 
 | src/main/java/app/auth/ | Authentication(login) and access manager classes | 
-| src/main/java/app/controllers/ | It includes controller for parsing user request from view | 
+| src/main/java/app/controllers/ | It includes controller for parsing appUser request from view | 
 | src/main/java/app/dao/ | Dao includes simple java classes which contains JDBC logic. Dao(Data Access Object) is a design pattern. | 
 | src/main/java/app/models/ | Classes for managing the data model and tables | 
 | src/main/java/app/utils/ | Helper and util classes. Includes Views.java for mapping and population views, and PasswordGenerators helper class to encrypt the password | 
