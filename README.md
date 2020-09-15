@@ -19,14 +19,20 @@ Read the [Quick start](/docs/Quick_Start.md) to boot your application.
 
 ### Users
 
-* Admin 
+* Admin `Administrator`
   * email: admin@test.com
   * password: admin
-* Registered User
-  * email : appUser@test.com
-  * password : appUser 
+* Admin `SEF Tutor`
+  * email : tutor@rmit.edu.au
+  * password : tutor   
+* User `Customer`
+  * email : user@test.com
+  * password : user 
   
-
-# Need Enable Java Annotation Processing for Lombok to work
+# Run it
+**Note** Java version is 11. If the default JDK is Java 8, you need set up the `JAVA_HOME` environment variable before compile
+`export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk11.0.7-zulu.jdk/Contents/Home` (on mac)
+`mvn clean package`
+`java -jar target/sef-bfit-0.1-SNAPSHOT.jar`
 
 
