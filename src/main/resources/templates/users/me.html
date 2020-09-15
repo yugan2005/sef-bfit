@@ -1,36 +1,57 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- Common head content is included from common.html  -->
-    <th:block th:include="/views/fragments/common.html :: commonhead"></th:block>
+  <!-- Common head content is included from common.html  -->
+  <th:block th:include="fragments/common.html :: commonhead"></th:block>
 
-    <!-- Include custom head for this head after this line -->
-    <title>Page Title</title>
+  <!-- Include custom head for this head after this line -->
+  <title>Profile</title>
 
-    <!-- You can create a css with styles only for this page -->
-    <!-- <link href="/css/yourpage.css" rel="stylesheet">-->
+  <!-- You can create a css with styles only for this page -->
+  <!-- <link href="/css/yourpage.css" rel="stylesheet">-->
 </head>
 
 <body>
 
 <!-- Nav bar is located in common.html -->
-<header th:replace="/views/fragments/common.html :: header"></header>
+<header th:replace="fragments/common.html :: header"></header>
 
 <!-- Begin THIS page content -->
 <main role="main" class="container ">
-    <h1>Restricted Page</h1>
-    <h2>Current User information</h2>
-    <p><b>Name:</b> <span th:text="${appUser.name}"></span></p>
-    <p><b>Email:</b> <span th:text="${appUser.email}"></span></p>
-    <p><b>Role:</b> <span th:text="${appUser.role}"></span></p>
+  <h2 class="mb-3">My Registered Programs</h2>
+  <p><b>Name:</b> <span th:text="${user.name}"></span></p>
+  <p><b>Email:</b> <span th:text="${user.email}"></span></p>
+  <hr>
+  <div class="container">
+    <ul class="list-group">
+      <li class="list-group-item" th:each="program: ${programDetails.keySet()}">
+        <p><b>Program: </b> <span th:text="${program.getName()}"></span></p>
+        <p><b>Progress: </b>
+          <span th:text="${programDetails.get(program).size() + ' out of ' + program.getWorkouts().size()}"></span>
+        </p>
+        <div class="row d-flex flex-wrap">
+          <div class="card col-sm-3 text-center" th:each="workout, itemStat: ${program.getWorkouts()}"
+               style="height: 8rem"
+               th:classappend="${programDetails.get(program).containsKey(itemStat.index)} ? 'bg-primary text-light'">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${workout.getName()}"></h5>
+              <p class="card-text" th:if="${programDetails.get(program).containsKey(itemStat.index)}"
+                 th:text="${programDetails.get(program).get(itemStat.index)}"></p>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
 </main>
 <!-- End THIS page content -->
 
 
 <!-- Footer is located in common.html -->
-<footer class="footer" th:replace="/views/fragments/common.html :: footer"> </footer>
+<footer class="footer" th:replace="fragments/common.html :: footer"></footer>
 
 <!-- Bootstrap Scripts  -->
-<th:block th:include="/views/fragments/common.html :: scripts"></th:block>
+<th:block th:include="fragments/common.html :: scripts"></th:block>
 </body>
 </html>

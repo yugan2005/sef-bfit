@@ -30,7 +30,7 @@ public class AppUserValidator implements Validator {
     if (user.getName().length() < 2 || user.getName().length() > 32) {
       errors.rejectValue("name", "Size.appUser.name");
     }
-    if (appUserService.findByEmail(user.getEmail()) != null) {
+    if (appUserService.getByEmail(user.getEmail()) != null) {
       errors.rejectValue("email", "Duplicate.appUser.email");
     }
 

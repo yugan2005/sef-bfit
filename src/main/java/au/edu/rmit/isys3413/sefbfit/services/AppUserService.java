@@ -27,12 +27,12 @@ public class AppUserService {
     return appUserRepository.findAll();
   }
 
-  public AppUser findByEmail(String email) {
+  public AppUser getByEmail(String email) {
     return appUserRepository.findByEmail(email);
   }
 
   public AppUser save(AppUser appUser) throws UserAlreadyExistException {
-    if (appUser.getId() != null && findByEmail(appUser.getEmail()) != null) {
+    if (appUser.getId() != null && getByEmail(appUser.getEmail()) != null) {
       throw new UserAlreadyExistException(String.format("user with email: %s already exist", appUser.getEmail()));
     }
 

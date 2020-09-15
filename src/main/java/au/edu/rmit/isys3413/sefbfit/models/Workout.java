@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +30,10 @@ public class Workout {
   @Singular
   @ElementCollection
   private List<Recipe> recipes;
+
+  @Singular
+  @ManyToMany (mappedBy = "workouts")
+  private List<Program> programs;
 
   public void removeRecipeByIndex(int idx) {
     recipes.remove(idx);

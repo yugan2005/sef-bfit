@@ -24,6 +24,10 @@ public class WorkoutService {
     return workoutRepository.findById(id).orElse(null);
   }
 
+  public Workout getByName(String name) {
+    return workoutRepository.findByName(name);
+  }
+
   public Workout save(Workout workout) {
     return workoutRepository.save(workout);
   }

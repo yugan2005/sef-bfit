@@ -1,7 +1,6 @@
 package au.edu.rmit.isys3413.sefbfit.controllers;
 
 import au.edu.rmit.isys3413.sefbfit.models.AppUser;
-import au.edu.rmit.isys3413.sefbfit.models.Role;
 import au.edu.rmit.isys3413.sefbfit.models.Workout;
 import au.edu.rmit.isys3413.sefbfit.models.workoutrecipe.Recipe;
 import au.edu.rmit.isys3413.sefbfit.services.AppUserService;
@@ -35,7 +34,7 @@ public class WorkoutController {
   public void addUserInfo(Principal principal, Model model) {
     if (principal != null) {
       String email = principal.getName();
-      AppUser user = appUserService.findByEmail(email);
+      AppUser user = appUserService.getByEmail(email);
       model.addAttribute("user", user);
     }
   }

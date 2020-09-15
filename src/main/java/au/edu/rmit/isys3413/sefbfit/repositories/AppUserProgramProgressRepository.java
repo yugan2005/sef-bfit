@@ -1,11 +1,9 @@
 package au.edu.rmit.isys3413.sefbfit.repositories;
 
-import au.edu.rmit.isys3413.sefbfit.models.Workout;
+import au.edu.rmit.isys3413.sefbfit.models.AppUserProgramProgress;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
-public interface WorkoutRepository extends JpaRepository<Workout, Long> {
-  Workout findByName(String name);
+public interface AppUserProgramProgressRepository extends JpaRepository<AppUserProgramProgress, Long> {
 }

@@ -1,10 +1,18 @@
 package au.edu.rmit.isys3413.sefbfit.controllers;
 
 import au.edu.rmit.isys3413.sefbfit.models.AppUser;
+import au.edu.rmit.isys3413.sefbfit.models.AppUserProgramProgress;
+import au.edu.rmit.isys3413.sefbfit.models.Program;
 import au.edu.rmit.isys3413.sefbfit.services.AppUserService;
 import au.edu.rmit.isys3413.sefbfit.validator.AppUserValidator;
+import java.security.Principal;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import javax.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
-import org.dom4j.rule.Mode;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +32,15 @@ public class AppUserController {
     this.appUserValidator = appUserValidator;
   }
 
+  @ModelAttribute
+  public void addUserInfo(Principal principal, Model model) {
+    if (principal != null) {
+      String email = principal.getName();
+      AppUser user = appUserService.getByEmail(email);
+      model.addAttribute("user", user);
+    }
+  }
+
   @GetMapping("/signup")
   public String signup(Model model) {
     model.addAttribute("user", AppUser.builder().build());
@@ -39,8 +56,6 @@ public class AppUserController {
     }
 
     appUserService.save(appUser);
-
-    //TODO
     return "redirect:/login";
   }
 
@@ -57,15 +72,17 @@ public class AppUserController {
     return "auth/login";
   }
 
-//  @PostMapping("/auth")
-//  public String authorization(@ModelAttribute("user") AppUser appUser, BindingResult bindingResult) {
-//    log.error("login post");
-//    log.error(appUser.toString());
-//    if (securityService.authenticate(appUser)) {
-//      log.error("authenticated");
-//    } else {
-//      log.error("not authenticated");
-//    }
-//    return "welcome/index";
-//  }
+  @GetMapping("/users/profile")
+  public String getUserProfile(Model model) {
+    AppUser appUser = (AppUser) model.getAttribute("user");
+    if (appUser == null) {
+      return "auth/login";
+    }
+    List<AppUserProgramProgress> programProgresses = appUser.getAppUserProgramProgresses();
+    Map<Program, Map<Integer, LocalDate>> programDetails = programProgresses.stream()
+        .collect(Collectors.groupingBy(AppUserProgramProgress::getProgram,
+            Collectors.toMap(AppUserProgramProgress::getWorkoutIdxInProgram, AppUserProgramProgress::getWorkoutDate)));
+    model.addAttribute("programDetails", programDetails);
+    return "users/me";
+  }
 }

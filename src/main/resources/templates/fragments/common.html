@@ -43,7 +43,7 @@
           <a sec:authorize="isAnonymous()" class="btn btn-sm btn-outline-success" href="/login">Login</a>
           <div sec:authorize="isAuthenticated()" class="mr-3 text-light">Welcome
             <!--/*@thymesVar id="user" type="au.edu.rmit.isys3413.sefbfit.models.AppUser"*/-->
-            <span th:text="${user.name}"></span></div>
+            <a th:text="${user.name}" th:href="@{/users/profile}"></a></div>
           <a sec:authorize="isAuthenticated()" class="btn btn-sm btn-outline-danger" href="/logout">Logout</a>
         </li>
       </ul>
