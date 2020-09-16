@@ -2,7 +2,6 @@ package au.edu.rmit.isys3413.sefbfit.configs;
 
 import au.edu.rmit.isys3413.sefbfit.models.Role;
 import au.edu.rmit.isys3413.sefbfit.services.SecurityUserDetailsService;
-import javax.naming.NoPermissionException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -13,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
